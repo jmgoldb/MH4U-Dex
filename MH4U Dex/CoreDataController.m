@@ -55,6 +55,7 @@ static NSString *const QuestDropFilePrefix = @"quest_drops";
         NSLog(@"Resetting Core Data");
         [self resetCoreData];
         //TODO: Call [self rebuildPersistentStore] when it is time to rebuild the prebuilt store.
+        [self rebuildPersistentStore];
         [CoreDataController setShouldTriggerReloadUponRestart:NO];
     }
 }
@@ -629,23 +630,23 @@ static NSString *const QuestDropFilePrefix = @"quest_drops";
     }
     
     NSURL *storeURL = [self.applicationDocumentsDirectory URLByAppendingPathComponent:@"MH4U_DEX.sqlite"];
-//    NSLog(@"%@", storeURL);
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    // If the expected store doesn't exist, copy the default store.
-    if (![fileManager fileExistsAtPath:storeURL.path]) {
-        NSURL *defaultStoreURL = [[NSBundle mainBundle] URLForResource:@"PREBUILT_STORE" withExtension:@"sqlite"];
-        if (defaultStoreURL) {
-            NSError *fileCopyError;
-            if (![fileManager copyItemAtURL:defaultStoreURL
-                                      toURL:storeURL
-                                      error:&fileCopyError]) {
-                //TODO: Consider debugging the error.
-                NSLog(@"Unresolved error %@", fileCopyError);
-            }
-        }
-        
-    }
+    NSLog(@"%@", storeURL);
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    
+//    // If the expected store doesn't exist, copy the default store.
+//    if (![fileManager fileExistsAtPath:storeURL.path]) {
+//        NSURL *defaultStoreURL = [[NSBundle mainBundle] URLForResource:@"PREBUILT_STORE" withExtension:@"sqlite"];
+//        if (defaultStoreURL) {
+//            NSError *fileCopyError;
+//            if (![fileManager copyItemAtURL:defaultStoreURL
+//                                      toURL:storeURL
+//                                      error:&fileCopyError]) {
+//                //TODO: Consider debugging the error.
+//                NSLog(@"Unresolved error %@", fileCopyError);
+//            }
+//        }
+//        
+//    }
     NSDictionary *options = @{
                               NSMigratePersistentStoresAutomaticallyOption: @YES,
                               NSInferMappingModelAutomaticallyOption: @YES,
